@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Button from "./Button";
 import { useState } from "react";
 import { GiFullPizza } from "react-icons/gi";
 import { TiThMenu } from "react-icons/ti";
@@ -24,6 +23,7 @@ const Navbar = () => {
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
+      {/*Napraviti jednu list komponetnu */}
       <ul className="hidden lg:flex gap-8 items-center">
         <Link href="/" className="text-lg lg:text-base">
           Home
@@ -37,7 +37,20 @@ const Navbar = () => {
         <Link href="/locations" className="text-lg lg:text-base">
           Locations
         </Link>
-        <Button>Sign Up</Button>
+        <div className="flex items-center gap-5">
+          <Link
+            href={"/login"}
+            className="text-[#973131] border-[2px] rounded-xl py-2 px-3"
+          >
+            Login
+          </Link>
+          <Link
+            href={"/register"}
+            className="bg-[#973131] text-white rounded-xl py-2 px-3"
+          >
+            Register
+          </Link>
+        </div>
       </ul>
       {isOpen && (
         <div className="absolute top-0 left-0 w-full h-screen bg-white flex flex-col justify-center items-center z-10">
@@ -55,10 +68,22 @@ const Navbar = () => {
             <Link href="#menu" className="text-2xl">
               Menu
             </Link>
-            <Link href="/locations" className="text-2xl">
+            <Link href="/register" className="text-2xl">
               Locations
             </Link>
-            <Button>Sign Up</Button>
+            <div className="flex gap-3">
+              <Link
+                href={"/login"}
+                className="text-[#973131] border-[2px] rounded-xl py-2 px-3"
+              >
+                Login
+              </Link>
+              <Link href={"/register"}>
+                <a className="bg-[#973131] text-white rounded-xl py-2 px-3">
+                  Register
+                </a>
+              </Link>
+            </div>
           </ul>
         </div>
       )}
