@@ -39,14 +39,14 @@ const Navbar = () => {
         </Link>
         <div className="flex items-center gap-5">
           <Link
-            href={"/login"}
-            className="text-[#973131] border-[2px] rounded-xl py-2 px-3"
+            href="/login"
+            className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
           >
             Login
           </Link>
           <Link
-            href={"/register"}
-            className="bg-[#973131] text-white rounded-xl py-2 px-3"
+            href="/register"
+            className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
           >
             Register
           </Link>
@@ -73,15 +73,16 @@ const Navbar = () => {
             </Link>
             <div className="flex gap-3">
               <Link
-                href={"/login"}
-                className="text-[#973131] border-[2px] rounded-xl py-2 px-3"
+                href="/login"
+                className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
               >
                 Login
               </Link>
-              <Link href={"/register"}>
-                <a className="bg-[#973131] text-white rounded-xl py-2 px-3">
-                  Register
-                </a>
+              <Link
+                href="/register"
+                className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+              >
+                Register
               </Link>
             </div>
           </ul>
