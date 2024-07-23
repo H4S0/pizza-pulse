@@ -5,10 +5,13 @@ import { useState } from "react";
 import { GiFullPizza } from "react-icons/gi";
 import { TiThMenu } from "react-icons/ti";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const session = useSession();
+  const status = session.status;
+  console.log(session);
   return (
     <nav className="flex justify-between items-center p-5 bg-white relative">
       <div className="flex flex-row items-center gap-5">
@@ -38,18 +41,29 @@ const Navbar = () => {
           Locations
         </Link>
         <div className="flex items-center gap-5">
-          <Link
-            href="/login"
-            className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
-          >
-            Login
-          </Link>
-          <Link
-            href="/register"
-            className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-          >
-            Register
-          </Link>
+          {status === "authenticated" ? (
+            <button
+              onClick={() => signOut()}
+              className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </ul>
       {isOpen && (
@@ -72,18 +86,29 @@ const Navbar = () => {
               Locations
             </Link>
             <div className="flex gap-3">
-              <Link
-                href="/login"
-                className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-              >
-                Register
-              </Link>
+              {status === "authenticated" ? (
+                <button
+                  onClick={() => signOut()}
+                  className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </ul>
         </div>
