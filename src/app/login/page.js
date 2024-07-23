@@ -5,18 +5,9 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { signIn, getCsrfToken } from "next-auth/react";
 const page = () => {
-  const [csrfToken, setCsrfToken] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginInProgress, setLoginInProgress] = useState(false);
-
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      const token = await getCsrfToken();
-      setCsrfToken(token);
-    };
-    fetchCsrfToken();
-  }, []);
 
   async function handleFormSubmit(e) {
     e.preventDefault();
@@ -25,9 +16,8 @@ const page = () => {
     const result = await signIn("credentials", {
       email,
       password,
-      csrfToken,
+      callbackUrl: "/",
     });
-    console.log(result);
     setLoginInProgress(false);
   }
   return (
@@ -40,7 +30,6 @@ const page = () => {
         <h2 className="text-2xl font-bold mb-4 text-center text-[#973131]">
           Login
         </h2>
-        <input name="csrfToken" type="hidden" value={csrfToken} />
         <div className="mb-4">
           <input
             name="email"
