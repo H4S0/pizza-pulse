@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function RegisterPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [creatingUser, setCreatingUser] = useState(false);
   const [userCreated, setUserCreated] = useState(false);
   const [error, setError] = useState(false);
+
   async function handleFormSubmit(ev) {
     ev.preventDefault();
     setCreatingUser(true);
@@ -18,7 +20,7 @@ export default function RegisterPage() {
     setUserCreated(false);
     const response = await fetch("/api/register", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, email, password }),
       headers: { "Content-Type": "application/json" },
     });
     if (response.ok) {
@@ -49,12 +51,22 @@ export default function RegisterPage() {
         </div>
       )}
       <form
-        className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto"
+        className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto mt-[10%]"
         onSubmit={handleFormSubmit}
       >
         <h2 className="text-2xl font-bold mb-4 text-center text-[#973131]">
           Register
         </h2>
+        <div className="mb-4">
+          <input
+            type="username"
+            placeholder="Username"
+            value={username}
+            disabled={creatingUser}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#973131] disabled:bg-gray-200"
+          />
+        </div>
         <div className="mb-4">
           <input
             type="email"
@@ -65,7 +77,7 @@ export default function RegisterPage() {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#973131] disabled:bg-gray-200"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-9">
           <input
             type="password"
             placeholder="Password"
