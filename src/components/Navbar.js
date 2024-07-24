@@ -7,11 +7,48 @@ import { TiThMenu } from "react-icons/ti";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { signOut, useSession } from "next-auth/react";
 
+function UserLogout({ status, username }) {
+  if (status === "authenticated") {
+    return (
+      <>
+        <span>Hello, {username}</span>
+        <button
+          onClick={() => signOut()}
+          className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+        >
+          Logout
+        </button>
+      </>
+    );
+  }
+  if (status === "unauthenticated") {
+    return (
+      <>
+        <Link
+          href="/login"
+          className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
+        >
+          Login
+        </Link>
+        <Link
+          href="/register"
+          className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
+        >
+          Register
+        </Link>
+      </>
+    );
+  }
+  return null;
+}
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const session = useSession();
-  const status = session.status;
-  console.log(session);
+  const { data: session, status } = useSession();
+  const username = session?.user?.name;
+
+  console.log(session); // Debugging line
+
   return (
     <nav className="flex justify-between items-center p-5 bg-white relative">
       <div className="flex flex-row items-center gap-5">
@@ -26,7 +63,6 @@ const Navbar = () => {
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
-      {/*Napraviti jednu list komponetnu */}
       <ul className="hidden lg:flex gap-8 items-center">
         <Link href="/" className="text-lg lg:text-base">
           Home
@@ -40,31 +76,7 @@ const Navbar = () => {
         <Link href="/locations" className="text-lg lg:text-base">
           Locations
         </Link>
-        <div className="flex items-center gap-5">
-          {status === "authenticated" ? (
-            <button
-              onClick={() => signOut()}
-              className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-              >
-                Register
-              </Link>
-            </>
-          )}
-        </div>
+        <UserLogout status={status} username={username} />
       </ul>
       {isOpen && (
         <div className="absolute top-0 left-0 w-full h-screen bg-white flex flex-col justify-center items-center z-10">
@@ -82,33 +94,11 @@ const Navbar = () => {
             <Link href="#menu" className="text-2xl">
               Menu
             </Link>
-            <Link href="/register" className="text-2xl">
+            <Link href="/locations" className="text-2xl">
               Locations
             </Link>
             <div className="flex gap-3">
-              {status === "authenticated" ? (
-                <button
-                  onClick={() => signOut()}
-                  className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-                >
-                  Logout
-                </button>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="text-[#973131] border-[2px] hover:scale-105 rounded-xl py-2 px-3 transition-all duration-300 ease-in-out"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
-                  >
-                    Register
-                  </Link>
-                </>
-              )}
+              <UserLogout status={status} username={username} />
             </div>
           </ul>
         </div>
