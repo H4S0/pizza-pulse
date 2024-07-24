@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { signIn, getCsrfToken } from "next-auth/react";
 const page = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginInProgress, setLoginInProgress] = useState(false);
@@ -32,6 +33,16 @@ const page = () => {
         </h2>
         <div className="mb-4">
           <input
+            type="username"
+            placeholder="Username"
+            value={username}
+            disabled={loginInProgress}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#973131] disabled:bg-gray-200"
+          />
+        </div>
+        <div className="mb-4">
+          <input
             name="email"
             type="email"
             placeholder="Email"
@@ -41,7 +52,7 @@ const page = () => {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#973131] disabled:bg-gray-200"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-9">
           <input
             name="password"
             type="password"
