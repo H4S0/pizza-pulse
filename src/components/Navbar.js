@@ -11,7 +11,7 @@ function UserLogout({ status, username }) {
   if (status === "authenticated") {
     return (
       <>
-        <span>Hello, {username}</span>
+        <Link href="/profile">Hello, {username}</Link>
         <button
           onClick={() => signOut()}
           className="bg-[#973131] text-white rounded-xl py-2 px-3 transition-all duration-300 ease-in-out hover:scale-105"
@@ -68,7 +68,7 @@ const Navbar = () => {
           Home
         </Link>
         <Link href="/about" className="text-lg lg:text-base">
-          About
+          Profile
         </Link>
         <Link href="#menu" className="text-lg lg:text-base">
           Menu
