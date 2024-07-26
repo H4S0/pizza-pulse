@@ -3,21 +3,38 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="flex items-center justify-between mt-6">
-      <div>
-        <h2 className="text-4xl">
-          Slice into happiness,
-          <br /> one <span className="text-[#973131] font-bold">pizza</span> at
-          a time.
+    <section className="flex flex-col items-center mt-[10%] text-center">
+      <div className="mb-5">
+        <h2 className="text-4xl font-semibold">
+          Slice into happiness,one{" "}
+          <span className="text-[#973131] font-bold">pizza</span> at a time.
         </h2>
-        <p className="w-[65vh] mt-5 text-2xl">
-          At ST's PIZZA, we believe that pizza is more than just a meal – it's
-          an experience. Each pizza is a masterpiece, crafted with love and
+        <p className=" mt-5 text-2xl">
+          At <span className="font-bold text-[#973131]">ST's PIZZA</span>, we
+          believe that pizza is masterpiece, crafted <br /> with love and
           attention to detail, using only the freshest ingredients.
         </p>
       </div>
-      <div>
-        <Image src="/pizza.png" alt="alt" width={400} height={450} />
+      <div className="flex relative items-center justify-center">
+        <Image
+          src="/—Pngtree—pizza slice_15340723.png"
+          alt="alt"
+          width={400}
+          height={450}
+          className="mx-auto"
+        />
+        <Image
+          src="/cheese.png"
+          width={100}
+          height={150}
+          className="absolute -left-[65%] transform -rotate-12"
+        />
+        <Image
+          src="/cheese.png"
+          width={100}
+          height={150}
+          className="absolute -right-[65%] top-0"
+        />
       </div>
     </section>
   );
