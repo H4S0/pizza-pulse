@@ -47,7 +47,7 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const username = session?.user?.name;
 
-  console.log(session); // Debugging line
+  console.log(session);
 
   return (
     <nav className="flex justify-between items-center p-5 bg-white relative">
