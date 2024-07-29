@@ -22,6 +22,17 @@ export default function UserForm({ user, onSave }) {
     if (propName === "country") setCountry(value);
   }
 
+  useEffect(() => {
+    if (user) {
+      setPhone(user.phone || "");
+      setStreetAddress(user.streetAddress || "");
+      setPostalCode(user.postalCode || "");
+      setCity(user.city || "");
+      setCountry(user.country || "");
+      setAdmin(user.admin || false);
+    }
+  }, [user]);
+
   return (
     <div className="md:flex gap-4">
       <form
