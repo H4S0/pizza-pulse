@@ -30,17 +30,27 @@ export default function CategoriesPage() {
       if (editedCategory) {
         data._id = editedCategory._id;
       }
-      const response = await fetch("/api/categories", {
-        method: editedCategory ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      setCategoryName("");
-      fetchCategories();
-      setEditedCategory(null);
-      if (response.ok) resolve();
-      else reject();
+      try {
+        const response = await fetch("/api/categories", {
+          method: editedCategory ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error response:", errorData); // Debug log
+          throw new Error(errorData.error || "Unknown error");
+        }
+        setCategoryName("");
+        fetchCategories();
+        setEditedCategory(null);
+        resolve();
+      } catch (error) {
+        console.error("Request error:", error); // Debug log
+        reject(error);
+      }
     });
+
     await toast.promise(creationPromise, {
       loading: editedCategory
         ? "Updating category..."
@@ -55,11 +65,6 @@ export default function CategoriesPage() {
       const response = await fetch("/api/categories?_id=" + _id, {
         method: "DELETE",
       });
-      if (response.ok) {
-        resolve();
-      } else {
-        reject();
-      }
     });
 
     await toast.promise(promise, {
@@ -82,14 +87,17 @@ export default function CategoriesPage() {
   return (
     <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
-      <form className="mt-8" onSubmit={handleCategorySubmit}>
-        <div className="flex gap-2 items-end">
-          <div className="grow">
-            <label>
+      <form
+        className="mt-8 bg-white p-6 shadow-md rounded-lg"
+        onSubmit={handleCategorySubmit}
+      >
+        <div className="flex flex-col gap-4 md:flex-row md:items-end">
+          <div className="flex-grow">
+            <label className="block text-gray-700 font-semibold mb-2">
               {editedCategory ? "Update category" : "New category name"}
               {editedCategory && (
                 <>
-                  : <b>{editedCategory.name}</b>
+                  : <b>{editedCategory.category}</b>
                 </>
               )}
             </label>
@@ -97,10 +105,14 @@ export default function CategoriesPage() {
               type="text"
               value={categoryName}
               onChange={(ev) => setCategoryName(ev.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#973131] disabled:bg-gray-200"
             />
           </div>
-          <div className="pb-2 flex gap-2">
-            <button className="border border-primary" type="submit">
+          <div className="flex gap-2">
+            <button
+              className="bg-[#973131] text-white py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:scale-105 disabled:opacity-50"
+              type="submit"
+            >
               {editedCategory ? "Update" : "Create"}
             </button>
             <button
@@ -109,6 +121,7 @@ export default function CategoriesPage() {
                 setEditedCategory(null);
                 setCategoryName("");
               }}
+              className="bg-gray-500 text-white py-2 px-4 rounded-lg transition-all duration-300 ease-in-out hover:scale-105"
             >
               Cancel
             </button>
@@ -123,14 +136,15 @@ export default function CategoriesPage() {
               key={c._id}
               className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
             >
-              <div className="grow">{c.name}</div>
+              <div className="grow">{c.category}</div>
               <div className="flex gap-1">
                 <button
                   type="button"
                   onClick={() => {
                     setEditedCategory(c);
-                    setCategoryName(c.name);
+                    setCategoryName(c.category);
                   }}
+                  className="bg-yellow-500 text-white py-1 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-105"
                 >
                   Edit
                 </button>
