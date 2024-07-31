@@ -1,10 +1,9 @@
 "use client";
 import AddressInputs from "@/components/AddressInputs";
 import { useProfile } from "@/components/Useprofile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserForm({ user, onSave }) {
-  const [fullName, setFullName] = useState(user?.fullName || "");
   const [image, setImage] = useState(user?.image || "");
   const [phone, setPhone] = useState(user?.phone || "");
   const [streetAddress, setStreetAddress] = useState(user?.streetAddress || "");
@@ -52,24 +51,6 @@ export default function UserForm({ user, onSave }) {
           addressProps={{ phone, streetAddress, postalCode, city, country }}
           setAddressProp={handleAddressChange}
         />
-        {loggedInUserData.admin && (
-          <div>
-            <label
-              className="p-2 inline-flex items-center gap-2 mb-2"
-              htmlFor="adminCb"
-            >
-              <input
-                id="adminCb"
-                type="checkbox"
-                className=""
-                value={"1"}
-                checked={admin}
-                onChange={(ev) => setAdmin(ev.target.checked)}
-              />
-              <span>Admin</span>
-            </label>
-          </div>
-        )}
         <div className="flex justify-center item-center mt-5">
           <button
             type="submit"

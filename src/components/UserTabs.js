@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 export default function UserTabs({ isAdmin }) {
   const path = usePathname();
   return (
-    <div className="flex mx-auto gap-2 tabs justify-center flex-wrap">
-    {isAdmin && (
+    <div className="flex mx-auto gap-8 tabs justify-center flex-wrap mt-9">
+      {isAdmin && (
         <p className="bg-[#973131] text-white font-semibold rounded-full px-2">
           Hello admin
         </p>

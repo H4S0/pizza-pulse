@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between items-center p-5 bg-white relative">
       <div className="flex flex-row items-center gap-5">
-        <h2 className="text-3xl text-[#973131] font-bold">ST PIZZA's</h2>
+        <h2 className="text-3xl text-[#973131] font-bold">Pizza Pulse</h2>
         <GiFullPizza className="w-[35px] h-[35px] text-[#973131]" />
       </div>
       <div>
