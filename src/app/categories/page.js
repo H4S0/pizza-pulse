@@ -4,6 +4,7 @@ import UserTabs from "@/components/UserTabs";
 import { useEffect, useState } from "react";
 import { useProfile } from "@/components/Useprofile";
 import toast from "react-hot-toast";
+import Navbar from "@/components/Navbar";
 
 export default function CategoriesPage() {
   const [categoryName, setCategoryName] = useState("");
@@ -25,55 +26,72 @@ export default function CategoriesPage() {
 
   async function handleCategorySubmit(ev) {
     ev.preventDefault();
-    const creationPromise = new Promise(async (resolve, reject) => {
-      const data = { name: categoryName };
-      if (editedCategory) {
-        data._id = editedCategory._id;
-      }
-      try {
-        const response = await fetch("/api/categories", {
-          method: editedCategory ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error response:", errorData); // Debug log
-          throw new Error(errorData.error || "Unknown error");
-        }
-        setCategoryName("");
-        fetchCategories();
-        setEditedCategory(null);
-        resolve();
-      } catch (error) {
-        console.error("Request error:", error); // Debug log
-        reject(error);
-      }
-    });
+    const data = { name: categoryName };
+    if (editedCategory) {
+      data._id = editedCategory._id;
+    }
 
-    await toast.promise(creationPromise, {
-      loading: editedCategory
-        ? "Updating category..."
-        : "Creating your new category...",
-      success: editedCategory ? "Category updated" : "Category created",
-      error: "Error, sorry...",
-    });
+    try {
+      const response = await fetch("/api/categories", {
+        method: editedCategory ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error response:", errorData);
+        throw new Error(errorData.error || "Unknown error");
+      }
+
+      // Clear input fields and fetch updated categories
+      setCategoryName("");
+      setEditedCategory(null);
+      fetchCategories();
+
+      // Show a success message
+      await toast.promise(Promise.resolve(), {
+        loading: editedCategory
+          ? "Updating category..."
+          : "Creating category...",
+        success: editedCategory ? "Category updated" : "Category created",
+        error: "Error, sorry...",
+      });
+    } catch (error) {
+      // Show error message
+      toast.error("Error updating/creating category");
+      console.error("Request error:", error);
+    }
   }
 
   async function handleDeleteClick(_id) {
-    const promise = new Promise(async (resolve, reject) => {
-      const response = await fetch("/api/categories?_id=" + _id, {
+    try {
+      const response = await fetch(`/api/categories?_id=${_id}`, {
         method: "DELETE",
       });
-    });
 
-    await toast.promise(promise, {
-      loading: "Deleting...",
-      success: "Deleted",
-      error: "Error",
-    });
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error deleting category:", errorData);
+        throw new Error(errorData.error || "Unknown error");
+      }
 
-    fetchCategories();
+      // Remove the deleted category from the state
+      setCategories((prevCategories) =>
+        prevCategories.filter((category) => category._id !== _id)
+      );
+
+      // Show a success message
+      await toast.promise(Promise.resolve(), {
+        loading: "Deleting...",
+        success: "Category deleted",
+        error: "Error deleting category",
+      });
+    } catch (error) {
+      // Show error message
+      toast.error("Error deleting category");
+      console.error("Request error:", error);
+    }
   }
 
   if (profileLoading) {
@@ -86,6 +104,7 @@ export default function CategoriesPage() {
 
   return (
     <section className="mt-8 max-w-2xl mx-auto">
+      <Navbar />
       <UserTabs isAdmin={true} />
       <form
         className="mt-8 bg-white p-6 shadow-md rounded-lg"
@@ -136,13 +155,13 @@ export default function CategoriesPage() {
               key={c._id}
               className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
             >
-              <div className="grow">{c.category}</div>
+              <div className="grow">{c.name}</div>
               <div className="flex gap-1">
                 <button
                   type="button"
                   onClick={() => {
                     setEditedCategory(c);
-                    setCategoryName(c.category);
+                    setCategoryName(c.name);
                   }}
                   className="bg-yellow-500 text-white py-1 px-3 rounded-lg transition-all duration-300 ease-in-out hover:scale-105"
                 >
