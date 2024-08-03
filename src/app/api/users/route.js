@@ -1,9 +1,8 @@
-import { isAdmin } from "../auth/[...nextauth]/route";
+import { isAdmin } from "./../auth/[...nextauth]/route.js";
 import { User } from "@/models/User";
-import { ReturnDocument } from "mongodb";
 import mongoose from "mongoose";
 
-async function GET() {
+export async function GET() {
   mongoose.connect(process.env.MONGO_URL);
   if (await isAdmin()) {
     const users = await User.find();
@@ -12,5 +11,3 @@ async function GET() {
     return Response.json([]);
   }
 }
-
-export default route;
