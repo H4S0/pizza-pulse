@@ -6,7 +6,7 @@ import Image from "next/image";
 import UserTabs from "@/components/UserTabs";
 import { useProfile } from "@/components/Useprofile";
 import Right from "@/components/icons/Right";
-
+import Navbar from "@/components/Navbar";
 const page = () => {
   const [menuItems, setMenuItems] = useState([]);
   const { loading, data } = useProfile();
@@ -29,6 +29,7 @@ const page = () => {
 
   return (
     <section className="mt-8 max-w-2xl mx-auto">
+      <Navbar />
       <UserTabs isAdmin={true} />
       <div className="mt-8">
         <Link className="button flex" href={"/menu-items/new"}>
