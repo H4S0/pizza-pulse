@@ -103,7 +103,7 @@ export default function CategoriesPage() {
   }
 
   return (
-    <section className="mt-8 max-w-2xl mx-auto">
+    <section className="max-w-7xl mx-auto p-4">
       <Navbar />
       <UserTabs isAdmin={true} />
       <form
