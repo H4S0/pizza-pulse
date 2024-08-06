@@ -6,7 +6,7 @@ import UserTabs from "@/components/UserTabs";
 import Link from "next/link";
 import MenuItemPriceProps from "@/components/MenuItemPriceProps";
 import { useProfile } from "@/components/Useprofile";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import MenuItemForm from "@/components/MenuItemForm";
 
@@ -14,8 +14,31 @@ const page = () => {
   const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
 
+  async function handleSubmitForm(ev, data) {
+    ev.preventDefault();
+    const savingPromise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/menu-items", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        resolve();
+        setRedirectToItems(true);
+      } else {
+        reject();
+      }
+    });
+
+    await toast.promise(savingPromise, {
+      loading: "Saving this tasty item",
+      success: "Saved",
+      error: "Error",
+    });
+  }
+
   if (redirectToItems) {
-    return res.redirect("/menu-items");
+    return redirect("/menu-items");
   }
 
   if (loading) {
@@ -35,7 +58,7 @@ const page = () => {
           <span>Show all menu items</span>
         </Link>
       </div>
-      <MenuItemForm />
+      <MenuItemForm onSubmit={handleSubmitForm} />
     </section>
   );
 };
