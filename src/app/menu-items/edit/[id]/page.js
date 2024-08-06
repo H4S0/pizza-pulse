@@ -100,7 +100,7 @@ export default function EditMenuItemPage() {
         <div className="max-w-xs ml-auto pl-4">
           <DeleteButton
             label="Delete this menu item"
-            onDelete={handleDeleteClick}
+            onDelete={() => handleDeleteClick(menuItem._id)}
           />
         </div>
       </div>
