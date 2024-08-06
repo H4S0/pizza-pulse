@@ -1,32 +1,18 @@
 "use client";
+import Plus from "@/components/icons/Plus";
+import Trash from "@/components/icons/Trash";
 import Left from "@/components/icons/Left";
 import UserTabs from "@/components/UserTabs";
 import Link from "next/link";
-import MenuItemForm from "@/components/MenuItemForm";
+import MenuItemPriceProps from "@/components/MenuItemPriceProps";
 import { useProfile } from "@/components/Useprofile";
 import { redirect } from "next/dist/server/api-utils";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import MenuItemForm from "@/components/MenuItemForm";
 
 const page = () => {
   const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
-
-  async function handleFormSubmit(e) {
-    e.preventDefault();
-    const savingPromise = new Promise(async (resolve, reject) => {
-      const res = await fetch("/api/menu-items", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Contect-Type": "application/json" },
-      });
-      if (res.ok) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
-    setRedirectToItems(true);
-  }
 
   if (redirectToItems) {
     return res.redirect("/menu-items");
@@ -49,7 +35,7 @@ const page = () => {
           <span>Show all menu items</span>
         </Link>
       </div>
-      <MenuItemForm menuItem={null} onSubmit={handleFormSubmit} />
+      <MenuItemForm />
     </section>
   );
 };
