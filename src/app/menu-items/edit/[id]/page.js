@@ -5,7 +5,8 @@ import MenuItemForm from "@/components/MenuItemForm";
 import UserTabs from "@/components/UserTabs";
 import { useProfile } from "@/components/Useprofile";
 import Link from "next/link";
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -55,22 +56,26 @@ export default function EditMenuItemPage() {
   }
 
   async function handleDeleteClick(_id) {
+    if (!_id) {
+      console.error("No ID provided for deletion.");
+      return;
+    }
+
     try {
-      const response = await fetch("/api/categories?_id=" + _id, {
+      const response = await fetch(`/api/menu-items?_id=${_id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error response:", errorData); // Debug log
+        console.error("Error response:", errorData);
         throw new Error(errorData.error || "Unknown error");
       }
 
-      fetchCategories();
-      toast.success("Deleted");
+      console.log("Item deleted successfully");
+      setRedirectToItems(true);
     } catch (error) {
-      console.error("Request error:", error); // Debug log
-      toast.error("Error");
+      console.error("Request error:", error);
     }
   }
 
@@ -100,7 +105,7 @@ export default function EditMenuItemPage() {
         <div className="max-w-xs ml-auto pl-4">
           <DeleteButton
             label="Delete this menu item"
-            onDelete={() => handleDeleteClick(menuItem._id)}
+            onDelete={() => handleDeleteClick(id)}
           />
         </div>
       </div>
