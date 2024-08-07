@@ -6,6 +6,7 @@ import Image from "next/image";
 import UserTabs from "@/components/UserTabs";
 import { useProfile } from "@/components/Useprofile";
 import Right from "@/components/icons/Right";
+import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 const page = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -20,7 +21,7 @@ const page = () => {
   }, []);
 
   if (loading) {
-    return "Loading User info...";
+    return <Loader />;
   }
 
   if (!data.admin) {
