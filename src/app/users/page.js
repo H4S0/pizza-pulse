@@ -6,6 +6,8 @@ import { useProfile } from "@/components/Useprofile";
 import UserTabs from "@/components/UserTabs";
 import { use } from "bcrypt/promises";
 import Navbar from "@/components/Navbar";
+import Loader from "@/components/Loader";
+
 const page = () => {
   const [users, setUsers] = useState([]);
   const { loading, data } = useProfile();
@@ -31,8 +33,8 @@ const page = () => {
     fetchUsers();
   }, []);
 
-  if (loading) {
-    return "Loading user info";
+  if (profileLoading) {
+    return <Loader />;
   }
 
   if (!data.admin) {
