@@ -7,6 +7,7 @@ import Link from "next/link";
 import MenuItemPriceProps from "@/components/MenuItemPriceProps";
 import { useProfile } from "@/components/Useprofile";
 import { redirect } from "next/navigation";
+import Loader from "@/components/Loader";
 import React, { useState, useEffect } from "react";
 import MenuItemForm from "@/components/MenuItemForm";
 
@@ -42,7 +43,7 @@ const page = () => {
   }
 
   if (loading) {
-    return "Loading user info";
+    return <Loader />;
   }
 
   if (!data.admin) {
