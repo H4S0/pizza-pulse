@@ -5,6 +5,7 @@ import MenuItemForm from "@/components/MenuItemForm";
 import UserTabs from "@/components/UserTabs";
 import { useProfile } from "@/components/Useprofile";
 import Link from "next/link";
+import Loader from "@/components/Loader";
 import { redirect } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -84,7 +85,7 @@ export default function EditMenuItemPage() {
   }
 
   if (loading) {
-    return "Loading user info...";
+    return <Loader />;
   }
 
   if (!data.admin) {
