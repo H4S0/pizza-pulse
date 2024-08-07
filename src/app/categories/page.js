@@ -4,6 +4,7 @@ import UserTabs from "@/components/UserTabs";
 import { useEffect, useState } from "react";
 import { useProfile } from "@/components/Useprofile";
 import toast from "react-hot-toast";
+import Loader from "@/components/Loader";
 import Navbar from "@/components/Navbar";
 
 export default function CategoriesPage() {
@@ -95,7 +96,7 @@ export default function CategoriesPage() {
   }
 
   if (profileLoading) {
-    return "Loading user info...";
+    return <Loader />;
   }
 
   if (!profileData.admin) {
