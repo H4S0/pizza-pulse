@@ -5,6 +5,7 @@ import { useProfile } from "@/components/Useprofile";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Loader from "@/components/Loader";
 
 export default function EditUserPage() {
   const { loading, data } = useProfile();
@@ -39,7 +40,7 @@ export default function EditUserPage() {
   }
 
   if (loading) {
-    return "Loading user profile...";
+    return <Loader />;
   }
 
   if (!data.admin) {
