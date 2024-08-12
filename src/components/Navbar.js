@@ -6,6 +6,7 @@ import { GiFullPizza } from "react-icons/gi";
 import { TiThMenu } from "react-icons/ti";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { signOut, useSession } from "next-auth/react";
+import CartIcon from "./cartIcon";
 
 function UserLogout({ status, username }) {
   if (status === "authenticated") {
@@ -47,8 +48,6 @@ const Navbar = () => {
   const { data: session, status } = useSession();
   const username = session?.user?.name;
 
-  console.log(session);
-
   return (
     <nav className="flex justify-between items-center p-5 bg-white relative">
       <div className="flex flex-row items-center gap-5">
@@ -76,6 +75,9 @@ const Navbar = () => {
         <Link href="/locations" className="text-lg lg:text-base">
           Locations
         </Link>
+        <Link href="/orders">
+          <CartIcon />
+        </Link>
         <UserLogout status={status} username={username} />
       </ul>
       {isOpen && (
@@ -96,6 +98,9 @@ const Navbar = () => {
             </Link>
             <Link href="/locations" className="text-2xl">
               Locations
+            </Link>
+            <Link href="/orders">
+              <CartIcon />
             </Link>
             <div className="flex gap-3">
               <UserLogout status={status} username={username} />
