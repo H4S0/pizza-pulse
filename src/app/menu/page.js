@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import AddToCartButton from "@/components/AddToCartButton";
 
 const page = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -18,8 +19,8 @@ const page = () => {
   const bestSeller = menuItems.slice(-3);
 
   return (
-    <section>
-      <h2 className="text-2xl font-bold mb-6 text-center text-[#973131]">
+    <section id="menu">
+      <h2 className="text-2xl font-bold mb-6 text-center text-[#973131] mt-5">
         Our Menu
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
@@ -33,10 +34,13 @@ const page = () => {
             <h3 className="text-lg font-semibold mt-4">{item.name}</h3>
             <p className="text-gray-700">{item.description}</p>
             <p className="text-gray-900 font-bold mt-2">${item.basePrice}</p>
+            <div className="flex items-center justify-center">
+              <AddToCartButton product={item} />
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-6 text-center">
+      <div className="mt-[5%] text-center">
         <Link
           href="/all-menu-items"
           className="bg-[#973131] text-white py-2 px-6 rounded-lg"
