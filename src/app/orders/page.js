@@ -3,14 +3,15 @@
 import { useContext } from "react";
 import { CartContext } from "@/components/AppContext";
 import Link from "next/link";
-
+import Navbar from "@/components/Navbar";
 const CartPage = () => {
   const { cartProducts, removeCartProduct, clearCart, cartProductPrice } =
     useContext(CartContext);
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-6 text-center text-[#973131]">
+      <Navbar />
+      <h2 className="text-2xl font-bold mb-6 text-center text-[#973131] mt-[5%]">
         Your Cart
       </h2>
       {cartProducts.length === 0 ? (
