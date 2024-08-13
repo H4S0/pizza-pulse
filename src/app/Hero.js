@@ -6,12 +6,12 @@ const Hero = () => {
     <section className="flex flex-col items-center mt-[10%] text-center">
       <div className="mb-5">
         <h2 className="text-4xl font-semibold">
-          Slice into happiness,one{" "}
+          Slice into happiness, one{" "}
           <span className="text-[#973131] font-bold">pizza</span> at a time.
         </h2>
-        <p className=" mt-5 text-2xl">
-          At <span className="font-bold text-[#973131]">ST's PIZZA</span>, we
-          believe that pizza is masterpiece, crafted <br /> with love and
+        <p className="mt-5 text-2xl">
+          At <span className="font-bold text-[#973131]">Pizza Pulse</span>, we
+          believe that pizza is a masterpiece, crafted <br /> with love and
           attention to detail, using only the freshest ingredients.
         </p>
       </div>
@@ -27,13 +27,13 @@ const Hero = () => {
           src="/cheese.png"
           width={100}
           height={150}
-          className="absolute -left-[65%] transform -rotate-12"
+          className="absolute -left-10 md:-left-20 transform -rotate-12"
         />
         <Image
           src="/cheese.png"
           width={100}
           height={150}
-          className="absolute -right-[65%] top-0"
+          className="absolute -right-10 md:-right-20 top-0"
         />
       </div>
     </section>
