@@ -55,7 +55,7 @@ export default function RegisterPage() {
         onSubmit={handleFormSubmit}
       >
         <h2 className="text-2xl font-bold mb-4 text-center text-[#973131]">
-          Registers
+          Register
         </h2>
         <div className="mb-4">
           <input
